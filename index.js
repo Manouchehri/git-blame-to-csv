@@ -26,16 +26,19 @@ Git.Repository.open(first_value)
         var walker = tree.walk();
         walker.on("entry", function(entry) {
             console.log(entry.path());
-            Git.Blame.file(repo, entry.path(), []).then(function(blame) {
-                for(let i = 0; i < blame.getHunkCount(); i++) {
-                    let hunk = blame.getHunkByIndex(i);
-                    for(let y = 0; y < hunk.linesInHunk(); y++) {
-                        console.log(entry.path() + "," + (hunk.finalStartLineNumber() + y) + "," + hunk.finalCommitId() + "," + hunk.finalSignature().name() + "," + hunk.finalSignature().email() + "," + hunk.finalSignature().when().time() + "," + hunk.finalSignature().when().offset()+ "," + hunk.finalSignature().when().sign())
+            if(entry.isFile()) {
+                Git.Blame.file(repo, entry.path(), []).then(function(blame) {
+                    for(let i = 0; i < blame.getHunkCount(); i++) {
+                        let hunk = blame.getHunkByIndex(i);
+                        for(let y = 0; y < hunk.linesInHunk(); y++) {
+                            console.log(entry.path() + "," + (hunk.finalStartLineNumber() + y) + "," + hunk.finalCommitId() + "," + hunk.finalSignature().name() + "," + hunk.finalSignature().email() + "," + hunk.finalSignature().when().time() + "," + hunk.finalSignature().when().offset()+ "," + hunk.finalSignature().when().sign())
+                            // console.log(entry.path() + "," + entry.sha() + "," + (hunk.finalStartLineNumber() + y) + "," + hunk.finalCommitId() + "," + hunk.finalSignature().name() + "," + hunk.finalSignature().email() + "," + hunk.finalSignature().when().time() + "," + hunk.finalSignature().when().offset()+ "," + hunk.finalSignature().when().sign())
+                        }
+                        // console.log(hunk.finalSignature().email())
                     }
-                    // console.log(hunk.finalSignature().email())
-                }
-                
-            });
+                    
+                });
+            }
         });
 
         // Don't forget to call `start()`!
