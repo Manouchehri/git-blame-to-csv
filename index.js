@@ -5,10 +5,10 @@ var script_path = process.argv[1]; //value will be "yourscript.js"
 var first_value = process.argv[2]; //value will be "banana"
 var second_value = process.argv[3]; //value will be "monkey"
 
-console.log(script_path)
-console.log(script_path)
-console.log(first_value)
-console.log(second_value)
+// console.log(script_path)
+// console.log(script_path)
+// console.log(first_value)
+// console.log(second_value)
 
 var getMostRecentCommit = function(repository) {
     return repository.getBranchCommit("main");
@@ -34,11 +34,11 @@ Git.Repository.open(first_value)
                     for(let i = 0; i < blame.getHunkCount(); i++) {
                         let hunk = blame.getHunkByIndex(i);
                         let current_commit = await Git.Commit.lookup(repo, hunk.finalCommitId())
-                        if(hunk.finalSignature().email() == current_commit.author().email()) {
-                            break;
-                        }
+                        // if(hunk.finalSignature().email() == current_commit.author().email()) {
+                        //     break;
+                        // }
                         for(let y = 0; y < hunk.linesInHunk(); y++) {
-                            console.log(entry.path() + "," + (hunk.finalStartLineNumber() + y) + "," + hunk.finalCommitId() + "," + hunk.finalSignature().name() + "," + hunk.finalSignature().email() + "," + hunk.finalSignature().when().time() + "," + hunk.finalSignature().when().offset() + "," + current_commit.time()  + "," + current_commit.committer() + "," + current_commit.author() )
+                            console.log(entry.path() + "," + (hunk.finalStartLineNumber() + y) + "," + hunk.finalCommitId() + "," + hunk.finalSignature().name() + "," + hunk.finalSignature().email() + "," + hunk.finalSignature().when().time() + "," + hunk.finalSignature().when().offset() + "," + current_commit.time()  + "," + current_commit.committer().name() + "," + current_commit.committer().email() )
                             // console.log(entry.path() + "," + entry.sha() + "," + (hunk.finalStartLineNumber() + y) + "," + hunk.finalCommitId() + "," + hunk.finalSignature().name() + "," + hunk.finalSignature().email() + "," + hunk.finalSignature().when().time() + "," + hunk.finalSignature().when().offset()+ "," + hunk.finalSignature().when().sign())
                         }
                         // console.log(hunk.finalSignature().email())
